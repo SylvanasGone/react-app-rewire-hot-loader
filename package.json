@@ -6,17 +6,13 @@
   "files": [
     "index.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cdharris/react-app-rewire-hot-loader.git"
-  },
   "keywords": ["webpack", "react-app-rewired"],
-  "author": "Chris Harris",
+  "author": "Sylvanas Gone",
   "license": "MIT",
-  "homepage": "https://github.com/cdharris/react-app-rewire-hot-loader",
+  "homepage": "https://github.com/SylvanasGone/react-app-rewire-hot-loader",
   "dependencies": {
   },
   "peerDependencies": {
-    "react-hot-loader": "^4.0.0"
+    "react-hot-loader": "^4.6.3"
   }
 }
