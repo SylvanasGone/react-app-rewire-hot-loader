@@ -1,6 +1,6 @@
 {
   "name": "@fdp/react-app-rewire-hot-loader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "在 react-app-rewire-hot-loader 基础上封装 injectBabelPlugin 方法",
   "main": "index.js",
   "files": [
