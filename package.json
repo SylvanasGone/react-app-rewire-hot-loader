@@ -1,6 +1,6 @@
 {
   "name": "@fdp/react-app-rewire-hot-loader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "针对 @fdp/react-app-rewired 封装的热加载插件",
   "main": "index.js",
   "files": [
