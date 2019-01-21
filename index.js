@@ -1,8 +1,20 @@
-const { injectBabelPlugin } = require('@fdp/react-app-rewired')
-
 function rewireHotLoader(config, env) {
   if (env === 'production') {
     return config
+  }
+
+  const getLoader = function(rules, matcher) {
+    let loader
+
+    rules.some(rule => {
+      return (loader = matcher(rule)
+        ? rule
+        : getLoader(
+            rule.use || rule.oneOf || (Array.isArray(rule.loader) && rule.loader) || [],
+            matcher
+          ))
+    })
+    return loader
   }
 
   // Find a rule which contains eslint-loader
@@ -18,7 +30,20 @@ function rewireHotLoader(config, env) {
     }
   }
 
-  return injectBabelPlugin(['react-hot-loader/babel'], config)
+  const babelLoader = getLoader(
+    config.module.rules,
+    rule => rule.loader && typeof rule.loader === 'string' && rule.loader.includes('babel-loader')
+  )
+
+  if (!babelLoader) {
+    console.log('babel-loader not found')
+    return config
+  }
+
+  const options = babelLoader.options || loader.query
+  options.plugins = ['react-hot-loader/babel'].concat(options.plugins || [])
+
+  return config
 }
 
 module.exports = rewireHotLoader
