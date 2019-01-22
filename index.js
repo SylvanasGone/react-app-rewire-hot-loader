@@ -1,27 +1,4 @@
-function rewireHotLoader(config, env) {
-  if (env === 'production') {
-    return config
-  }
-
-  const getLoader = function(rules, matcher) {
-    let loader
-
-    rules.some(rule => {
-      return (loader = matcher(rule)
-        ? rule
-        : getLoader(
-            rule.use || rule.oneOf || (Array.isArray(rule.loader) && rule.loader) || [],
-            matcher
-          ))
-    })
-    return loader
-  }
-
-  const babelLoader = getLoader(
-    config.module.rules,
-    rule => rule.loader && typeof rule.loader === 'string' && rule.loader.includes('babel-loader')
-  )
-
+function rewireHotLoader(babelLoader) {
   if (!babelLoader) {
     console.log('babel-loader not found')
     return config
