@@ -17,6 +17,16 @@ function rewireHotLoader(config, env) {
     return loader
   }
 
+  const babelLoader = getLoader(
+    config.module.rules,
+    rule => rule.loader && typeof rule.loader === 'string' && rule.loader.includes('babel-loader')
+  )
+
+  if (!babelLoader) {
+    console.log('babel-loader not found')
+    return config
+  }
+
   // Find a rule which contains eslint-loader
   const condition = u => typeof u === 'object' && u.loader && u.loader.includes('eslint-loader')
   const rule = config.module.rules.find(rule => rule.use && rule.use.some(condition))
@@ -30,17 +40,7 @@ function rewireHotLoader(config, env) {
     }
   }
 
-  const babelLoader = getLoader(
-    config.module.rules,
-    rule => rule.loader && typeof rule.loader === 'string' && rule.loader.includes('babel-loader')
-  )
-
-  if (!babelLoader) {
-    console.log('babel-loader not found')
-    return config
-  }
-
-  const options = babelLoader.options || loader.query
+  const options = babelLoader.options || babelLoader.query
   options.plugins = ['react-hot-loader/babel'].concat(options.plugins || [])
 
   return config
