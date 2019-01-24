@@ -1,4 +1,4 @@
-function rewireHotLoader(babelLoader) {
+function rewireHotLoader(config, babelLoader) {
   if (!babelLoader) {
     console.log('babel-loader not found')
     return config
